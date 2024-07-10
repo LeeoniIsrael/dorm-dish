@@ -1,0 +1,125 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  display: inline;
+  margin-left: 20px;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+}
+
+.recipe {
+  background-color: #f1f1f1;
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.recipe h2 {
+  margin-top: 0;
+}
+
+.recipe-details {
+  margin-top: 20px;
+}
+
+.ingredients, .instructions {
+  margin-bottom: 20px;
+}
+
+.chat-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #fff;
+  border-top: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.chat-messages {
+  width: 100%;  /* Remove max-width for Option 1 */
+  max-height: 200px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;  /* Option 2 for horizontal scrolling*/
+  margin-right: 10%;  /* Remove right margin if needed */
+}
+
+.user-message {
+  background-color: #d1e7ff;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  padding: 10px 15px;  /* Added padding for text */
+  margin-bottom: 10px;
+  align-self: flex-end;
+  /* Removed max-width for Option 1*/
+  word-wrap: break-word;
+  text-align: left;
+}
+
+
+#chatForm {
+  display: flex;
+  width: 90%; /* Adjust the width as needed */
+  max-width: 800px; /* Optional: Set a maximum width */
+}
+
+#userInput {
+  flex: 1;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+#chatForm button {
+  padding: 10px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#chatForm button:hover {
+  background-color: #0056b3;
+}

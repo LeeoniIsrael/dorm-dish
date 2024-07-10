@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dorm Dish</title>
+    <link rel="stylesheet" href="chat.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>dorm dish.</h1>
+            <nav>
+                <ul>
+                    <li><a href="#">recipes</a></li>
+                </ul>
+            </nav>
+        </header>
+    </div>
+    <div class="chat-container">
+        <div class="chat-messages" id="chatMessages"></div>
+        <form id="chatForm">
+            <input type="text" id="userInput" placeholder="What's in your fridge?" required>
+            <button type="submit">find recipe</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('chatForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const userInput = document.getElementById('userInput').value;
+            const userMessage = document.createElement('div');
+            userMessage.className = 'user-message';
+            userMessage.textContent = userInput;
+            document.getElementById('chatMessages').appendChild(userMessage);
+            document.getElementById('userInput').value = '';
+            // Scroll to the bottom of the chat messages
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe Finder</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div>
+        <h1>Recipe Finder</h1>
+        <form id="ingredients-form">
+            <label for="ingredients">Enter Ingredients:</label>
+            <input type="text" id="ingredients" name="ingredients" required>
+            <button type="submit">Get Recipes</button>
+        </form>
+        <div id="recipes"></div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            $('#ingredients-form').on('submit', function(event) {
+                event.preventDefault();
+                var ingredients = $('#ingredients').val();
+                $.ajax({
+                    url: '/get_recipes',
+                    type: 'POST',
+                    data: {ingredients: ingredients},
+                    success: function(data) {
+                        var recipesHtml = '<h2>Recipes:</h2>';
+                        $.each(data.recipes, function(index, recipe) {
+                            recipesHtml += '<div>';
+                            recipesHtml += '<h3>' + recipe.name + '</h3>';
+                            recipesHtml += '<h4>Ingredients:</h4>';
+                            recipesHtml += '<ul>';
+                            $.each(recipe.ingredients, function(i, ingredient) {
+                                recipesHtml += '<li>' + ingredient + '</li>';
+                            });
+                            recipesHtml += '</ul>';
+                            recipesHtml += '</div>';
+                        });
+                        $('#recipes').html(recipesHtml);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

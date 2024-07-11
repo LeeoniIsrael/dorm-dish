@@ -1,5 +1,6 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
   background-color: #f9f9f9;
   margin: 0;
   padding: 0;
@@ -75,7 +76,7 @@ nav ul li a {
 
 .chat-messages {
   width: 100%;  /* Remove max-width for Option 1 */
-  max-height: 200px;
+  max-height: 800px;
   overflow-y: auto;
   margin-bottom: 10px;
   display: flex;
@@ -85,6 +86,8 @@ nav ul li a {
 }
 
 .user-message {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
   background-color: #d1e7ff;
   border: 1px solid #007bff;
   border-radius: 5px;
@@ -104,7 +107,7 @@ nav ul li a {
 }
 
 #userInput {
-  flex: 1;
+  flex: 10;
   padding: 10px;
   margin-right: 10px;
   border: 1px solid #ddd;
@@ -122,4 +125,20 @@ nav ul li a {
 
 #chatForm button:hover {
   background-color: #0056b3;
+}
+
+.bot-message {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  background-color: #bcbfc2;
+  border: 1px solid #bbcbdd;
+  border-radius: 5px;
+  padding: 10px 15px;  /* Added padding for text */
+  margin-bottom: 10px;
+  align-self: flex-start;
+  /* Removed max-width for Option 1*/
+  word-wrap: break-word;
+  text-align: left;
+  margin-left: 10%;
+  width: 40%;
 }

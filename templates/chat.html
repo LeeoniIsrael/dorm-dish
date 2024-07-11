@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dorm Dish</title>
-    <link rel="stylesheet" href="chat.css">
+    <link rel="stylesheet" href="/static/style/chat.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -29,13 +30,40 @@
         document.getElementById('chatForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const userInput = document.getElementById('userInput').value;
+            
+            // Add user message to chat
             const userMessage = document.createElement('div');
             userMessage.className = 'user-message';
             userMessage.textContent = userInput;
             document.getElementById('chatMessages').appendChild(userMessage);
             document.getElementById('userInput').value = '';
+
             // Scroll to the bottom of the chat messages
             document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+
+            // Fetch recipes using AJAX
+            $.ajax({
+                url: '/get_recipes',
+                type: 'POST',
+                data: { ingredients: userInput },
+                success: function(data) {
+                    var recipesHtml = '<div class="bot-message"><h2>Recipes:</h2>';
+                    $.each(data.recipes, function(index, recipe) {
+                        recipesHtml += '<div>';
+                        recipesHtml += '<h3>' + recipe.name + '</h3>';
+                        recipesHtml += '<h4>Ingredients:</h4>';
+                        recipesHtml += '<ul>';
+                        $.each(recipe.ingredients, function(i, ingredient) {
+                            recipesHtml += '<li>' + ingredient + '</li>';
+                        });
+                        recipesHtml += '</ul>';
+                        recipesHtml += '</div>';
+                    });
+                    recipesHtml += '</div>';
+                    $('#chatMessages').append(recipesHtml);
+                    document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+                }
+            });
         });
     </script>
 </body>

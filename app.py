@@ -38,9 +38,9 @@ def create_tables():
 def home():
     return 'Hello'
 
-@app.route('/recipes')
+@app.route('/chat')
 def recipes():
-    return render_template('recipes.html')
+    return render_template('chat.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():

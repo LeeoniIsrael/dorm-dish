@@ -26,8 +26,10 @@
             <h1>are you hungry?</h1>
         </div>
         <div class="landing-input">
-            <input type="text" id="inputPrompt" placeholder="what's in your fridge?" required>
-            <button type="submit">find recipie</button>
+            <form id="landingForm" action="/chat" method="GET">
+                <input type="text" id="inputPrompt" name="userInput" placeholder="what's in your fridge?" required>
+                <button type="submit">find recipe</button>
+            </form>
         </div>
     </div>
 

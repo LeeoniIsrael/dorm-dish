@@ -6,6 +6,7 @@ from sqlalchemy.dialects.postgresql import JSON
 from openai import OpenAI
 import os
 from dotenv import load_dotenv
+import pprint
 
 load_dotenv()
 
@@ -33,14 +34,14 @@ def create_tables():
   with app.app_context():
     db.create_all()
 
-
-@app.route('/')
-def home():
-    return 'Hello'
-
 @app.route('/chat')
-def recipes():
+def chat():
     return render_template('chat.html')
+
+@app.route('/recipe')
+def recipe():
+    return render_template('recipe.html')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -134,7 +135,17 @@ def get_recipes():
     )
     recipes_text = completion.choices[0].message.content
     recipes = parse_recipes(recipes_text)
+    session['recipes'] = recipes 
     return jsonify({'recipes': recipes})
+
+@app.route('/fetch_recipes', methods=['GET'])
+def fetch_recipes():
+    recipes = session.get('recipes')
+    return jsonify({'recipes': recipes})
+
+@app.route('/', methods=['GET'])
+def landing():
+    return render_template('landing.html')
 
 
 @app.route('/users')

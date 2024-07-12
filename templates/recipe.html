@@ -3,6 +3,7 @@
 <head>
     <title>dorm dish.</title>
     <link rel="stylesheet" href="/static/style/recipe.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -10,8 +11,8 @@
         <h1>dorm dish.</h1>
         <nav>
             <ul>
-                <li><a href="/landing.html">home</a></li>
-                <li><a href="/chat.html">chat</a></li>
+                <li><a href="/">home</a></li>
+                <li><a href="/chat">chat</a></li>
             </ul>
         </nav>
     </header>
@@ -36,5 +37,33 @@
             <p>penne pasta, tomato sauce, pesto, cheese</p>
         </div>
     </div>
+
+    <script>
+        $(document).ready(function() {
+            // Make a GET request to fetch recipes
+            $.ajax({
+                url: '/fetch_recipes',
+                type: 'GET',
+                success: function(data) {
+                    console.log(data);
+                    var recipesHtml = '';
+                    
+                    var recipeKey = Object.keys(data.recipes)[1]; // Get the second key
+                    var recipe = data.recipes[recipeKey]
+
+                    recipesHtml += '<div class="dish">';
+                    recipesHtml += '<h2>' + recipe.name + '</h2>';
+                    recipesHtml += '<p>Ingredients: ' + recipe.ingredients.join(', ') + '</p>';
+                    recipesHtml += '</div>';
+                    
+                    $('.container').append(recipesHtml);
+                },
+                error: function() {
+                    console.log('something went wrong');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
+

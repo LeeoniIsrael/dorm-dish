@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="/static/style/chat.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -20,28 +22,39 @@
         </header>
     </div>
     <div class="chat-container">
-        <div class="chat-messages" id="chatMessages"></div>
+        <div class="chat-messages" id="chatMessages">
+            <!-- This is where messages will be displayed -->
+        </div>
         <form id="chatForm">
             <input type="text" id="userInput" placeholder="What's in your fridge?" required>
             <button type="submit">find recipe</button>
         </form>
     </div>
     <script>
-        document.getElementById('chatForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const userInput = document.getElementById('userInput').value;
-            
+        // Function to get URL parameter by name
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+    
+        // Check if there's a userInput parameter in the URL
+        var userInput = getParameterByName('userInput');
+        if (userInput) {
             // Add user message to chat
-            const userMessage = document.createElement('div');
+            var userMessage = document.createElement('div');
             userMessage.className = 'user-message';
             userMessage.textContent = userInput;
             document.getElementById('chatMessages').appendChild(userMessage);
-            document.getElementById('userInput').value = '';
-
+    
             // Scroll to the bottom of the chat messages
             document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
-
-            // Fetch recipes using AJAX
+    
+            // Simulate AJAX request to fetch recipes (replace with actual AJAX if needed)
             $.ajax({
                 url: '/get_recipes',
                 type: 'POST',
@@ -62,9 +75,58 @@
                     recipesHtml += '</div>';
                     $('#chatMessages').append(recipesHtml);
                     document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching recipes:', error);
+                    // Handle error if needed
+                }
+            });
+        }
+    
+        // Handle form submission to simulate sending a message (replace with actual form submission logic)
+        document.getElementById('chatForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var userInput = document.getElementById('userInput').value;
+    
+            // Add user message to chat
+            var userMessage = document.createElement('div');
+            userMessage.className = 'user-message';
+            userMessage.textContent = userInput;
+            document.getElementById('chatMessages').appendChild(userMessage);
+            document.getElementById('userInput').value = '';
+    
+            // Scroll to the bottom of the chat messages
+            document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+    
+            // Simulate AJAX request to fetch recipes (replace with actual AJAX if needed)
+            $.ajax({
+                url: '/get_recipes',
+                type: 'POST',
+                data: { ingredients: userInput },
+                success: function(data) {
+                    var recipesHtml = '<div class="bot-message"><h2>Recipes:</h2>';
+                    $.each(data.recipes, function(index, recipe) {
+                        recipesHtml += '<div>';
+                        recipesHtml += '<h3>' + recipe.name + '</h3>';
+                        recipesHtml += '<h4>Ingredients:</h4>';
+                        recipesHtml += '<ul>';
+                        $.each(recipe.ingredients, function(i, ingredient) {
+                            recipesHtml += '<li>' + ingredient + '</li>';
+                        });
+                        recipesHtml += '</ul>';
+                        recipesHtml += '</div>';
+                    });
+                    recipesHtml += '</div>';
+                    $('#chatMessages').append(recipesHtml);
+                    document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching recipes:', error);
+                    // Handle error if needed
                 }
             });
         });
     </script>
 </body>
+
 </html>
